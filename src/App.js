@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import store from './Reduxers';
-import { Container, Row, Col, Button } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
+import Counter from './components/Counter';
 
 import logo from './logo.svg';
 import './App.css';
@@ -9,6 +10,13 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      count: 0
+    }
+  }
+
   increment() {
     store.dispatch({ type: 'INCREMENT' });
   }
@@ -16,14 +24,24 @@ class App extends Component {
   decrement() {
     store.dispatch({ type: 'DECREMENT' });
   }
+
+  componentDidMount() {
+    store.subscribe(() => {
+      this.setState({count: store.getState()})
+    })
+  }
+ 
   render() {
     return (
       <div className="App">
         <Container>
           <Row>
             <Col lg="12">
-              <Button  onClick={this.increment} outline color="primary">Increment</Button>
-              <Button  onClick={this.decrement} outline color="primary">Decrement</Button>
+              <Counter 
+                value={this.state.count}
+                onIncrement={this.increment}
+                onDecrement={this.decrement}
+                />
             </Col>
           </Row>
         </Container>

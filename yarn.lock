@@ -1556,6 +1556,10 @@ component-emitter@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/component-emitter/-/component-emitter-1.2.1.tgz#137918d6d78283f7df7a6b7c5a63e140e69425e6"
 
+component-template@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/component-template/-/component-template-1.0.0.tgz#bf94e208c576bf3480d8d5b3a8471721fefbb408"
+
 compressible@~2.0.13:
   version "2.0.13"
   resolved "https://registry.yarnpkg.com/compressible/-/compressible-2.0.13.tgz#0d1020ab924b2fdb4d6279875c7d6daba6baa7a9"
