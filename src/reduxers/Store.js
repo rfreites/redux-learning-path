@@ -1,4 +1,5 @@
 import { createStore } from 'redux';
+import expect from 'expect.js';
 /**
  * This is a reducer, a pure function with (state, action) => state signature.
  * It describes how an action transforms the state into the next state.
@@ -35,23 +36,21 @@ let store = createStore(counter)
 // 2
 // store.dispatch({ type: 'DECREMENT' })
 // 1
-// expect(
-//     counter(0, { type: 'INCREMENT' })
-// ).toEqual(1);
-// expect(
-//     counter(1, { type: 'INCREMENT' })
-// ).toEqual(2);
-// expect(
-//     counter(2, { type: 'DECREMENT' })
-// ).toEqual(1);
-// expect(
-//     counter(1, { type: 'DECREMENT' })
-// ).toEqual(0);
-// expect(
-//     counter(1, { type: 'SOMETHING_ELSE'})
-// ).toEqual(1);
-// expect(
-//     counter(undefined, {})
-// ).toEqual(0);
-// console.info('Tests passed!');
+expect(counter(0, { type: 'INCREMENT' })).to.equal(1);
+expect(
+    counter(1, { type: 'INCREMENT' })
+).to.equal(2);
+expect(
+    counter(2, { type: 'DECREMENT' })
+).to.equal(1);
+expect(
+    counter(1, { type: 'DECREMENT' })
+).to.equal(0);
+expect(
+    counter(1, { type: 'SOMETHING_ELSE'})
+).to.equal(1);
+expect(
+    counter(undefined, {})
+).to.equal(0);
+console.info('Tests passed!');
 export default store;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import store from './Reduxers';
+import store from './reduxers/Store';
+
 import { Container, Row, Col } from 'reactstrap';
 import Counter from './components/Counter';
 
