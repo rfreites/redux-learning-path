@@ -12,6 +12,9 @@
         "semi": ["error", "always"],
         "no-cond-assign": ["error", "always"],
         "arrow-parens": 0,
-        "no-unreachable": 0
+        "no-unreachable": 0,
+        "react/jsx-filename-extension": 0,
+        "react/prefer-stateless-function": 0,
+        "object-shorthand": 0
     }
 }
