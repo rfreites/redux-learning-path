@@ -1,0 +1,17 @@
+{
+    "root": true,
+    "extends": "airbnb",
+    "rules": {
+        "no-console": 0,
+        "eol-last": 0,
+        "comma-dangle": 0,
+        "arrow-body-style": 1,
+        "indent": ["error", 2],
+        "linebreak-style": ["error", "unix"],
+        "quotes": ["error", "single"],
+        "semi": ["error", "always"],
+        "no-cond-assign": ["error", "always"],
+        "arrow-parens": 0,
+        "no-unreachable": 0
+    }
+}
