@@ -6,7 +6,7 @@ import registerServiceWorker from './registerServiceWorker';
 import store from './reduxers/Store';
 
 const render = () => {
-  ReactDOM.render(<App todos={store.getState().todos} />, document.getElementById('root'));
+  ReactDOM.render(<App {...store.getState()} />, document.getElementById('root'));
   registerServiceWorker();
 };
 

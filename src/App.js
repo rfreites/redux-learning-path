@@ -19,6 +19,7 @@ import Todos from './components/Todos';
 import store from './reduxers/Store';
 
 let nextTodo = 0;
+
 class App extends Component {
   constructor() {
     super();
@@ -59,7 +60,26 @@ class App extends Component {
               </Form>
             </Col>
             <Col lg="6">
-              <Todos todos={this.props.todos} />
+              <Row>
+                <Col lg="12">
+                  <Button onClick={() => store.dispatch({
+                    type: 'SET_VISIBILITY_FILTER',
+                    filter: 'SHOW_ALL'
+                  })}
+                  color="primary">Show All</Button>{' '}
+                  <Button onClick={() => store.dispatch({
+                    type: 'SET_VISIBILITY_FILTER',
+                    filter: 'SHOW_ACTIVE'
+                  })}
+                  color="success">Show Active</Button>{' '}
+                  <Button onClick={() => store.dispatch({
+                    type: 'SET_VISIBILITY_FILTER',
+                    filter: 'SHOW_COMPLETED'
+                  })}
+                  color="info">Show Completed</Button>{' '}
+                </Col>
+              </Row>
+              <Todos {...this.props} />
             </Col>
           </Row>
         </Container>
