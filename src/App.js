@@ -1,78 +1,65 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import React, { Component } from 'react';
 import {
-  Container,
-  Row,
+  Button,
   Col,
+  Container,
   Form,
   FormGroup,
-  Label,
   Input,
-  Button
+  Jumbotron,
+  Label,
+  Row
 } from 'reactstrap';
 // import ReactDOM from 'react-dom';
 import './reduxers/Todos';
 import './logo.svg';
 import './App.css';
+import Todos from './components/Todos';
 import store from './reduxers/Store';
 
-
+let nextTodo = 0;
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      count: 0,
-      todoDescription: ''
+      textInput: ''
     };
 
-    this.addTodo = this.addTodo.bind(this);
-    this.updateTodoDescription = this.updateTodoDescription.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  increment() {
-    store.dispatch({ type: 'INCREMENT' });
-  }
-
-  decrement() {
-    store.dispatch({ type: 'DECREMENT' });
-  }
-
-  componentDidMount() {
-    store.subscribe(() => {
-      console.info(store.getState());
-    });
-  }
-
-  addTodo() {
+  handleSubmit() {
     store.dispatch({
       type: 'ADD_TODO',
-      id: this.state.count,
-      text: this.state.todoDescription
+      id: nextTodo++,
+      text: this.state.textInput
     });
-
-    this.setState({
-      count: this.state.count + 1,
-      todoDescription: ''
-    });
-  }
-
-  updateTodoDescription(e) {
-    this.setState({ todoDescription: e.target.value });
+    this.setState({ textInput: '' });
   }
 
   render() {
     return (
       <div className="App">
+        <Jumbotron fluid>
+          <Container fluid>
+            <h1 className="display-3">Todos app</h1>
+            <p className="lead">This is a todo app.</p>
+          </Container>
+        </Jumbotron>
         <Container>
           <Row>
-            <Col lg="12">
+            <Col lg="6">
               <Form>
                 <FormGroup>
-                  <Label for="exampleEmail">Todo</Label>
-                  <Input onChange={this.updateTodoDescription} value={this.state.todoDescription} type="textarea" name="text" id="exampleText" />
+                  <Label for="exampleEmail">Add Todo</Label>
+                  <Input onChange={(e) => this.setState({ textInput: e.target.value })} value={this.state.textInput} type="textarea" name="text" id="exampleText" />
                 </FormGroup>
-                <Button onClick={this.addTodo} outline color="primary">add todo</Button>
+                <Button onClick={() => this.handleSubmit()} outline color="primary">submit</Button>
               </Form>
+            </Col>
+            <Col lg="6">
+              <Todos todos={this.props.todos} />
             </Col>
           </Row>
         </Container>
