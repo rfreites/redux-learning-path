@@ -37,25 +37,46 @@ class Todos extends Component {
       visibilityFilter
     );
 
-    return (
+    const Todo = ({
+      onClick,
+      completed,
+      text,
+      id
+    }) => (
+      <ListGroupItem
+        style={{
+          cursor: 'pointer',
+          textAlign: 'left'
+        }}
+        color={completed ? 'success' : 'danger'}
+        onClick={onClick}
+        currentfilter={visibilityFilter}>
+        <Badge pill style={{ marginRight: '10px' }}>{id}</Badge>
+        {text}
+      </ListGroupItem>);
+
+    const TodoList = ({
+      todos,
+      onTodoClick
+    }) => (
       <ListGroup style={{ marginTop: '10px' }}>
-        {visibleTodos.map(todo => (<ListGroupItem
-          style={{
-            cursor: 'pointer',
-            textAlign: 'left'
-          }}
-          color={todo.completed ? 'success' : 'danger'}
-          onClick={(e) => {
-            e.preventDefault();
-            store.dispatch({
-              type: 'TOGGLE_TODO',
-              id: todo.id
-            });
-          }}
-          currentfilter={visibilityFilter}
-          key={`${todo.id}-todo`}><Badge pill style={{ marginRight: '10px' }}>{todo.id}</Badge>{todo.text}</ListGroupItem>))}
+        {todos.map(todo => (
+          <Todo key={`${todo.id}-todo`}
+            {...todo}
+            onClick={() => onTodoClick(todo.id)}
+          />
+        ))}
       </ListGroup>
     );
+
+    return (<TodoList
+      todos={visibleTodos}
+      onTodoClick={id =>
+        store.dispatch({
+          type: 'TOGGLE_TODO',
+          id
+        })
+      } />);
   }
 }
 
