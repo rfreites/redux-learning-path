@@ -6,7 +6,6 @@ import {
   Container,
   Form,
   FormGroup,
-  Input,
   Jumbotron,
   Label,
   Row
@@ -20,24 +19,47 @@ import store from './reduxers/Store';
 
 let nextTodo = 0;
 
+const AddTodo = ({
+  onAddClick
+}) => {
+  let input;
+  return (
+    <Form>
+      <FormGroup>
+        <Label for="exampleEmail">Add Todo</Label>
+        <textarea ref={node => {
+          input = node;
+        }} className="form-control" aria-label="With textarea" />
+      </FormGroup>
+      <Button onClick={() => {
+        onAddClick(input.value);
+        input.value = '';
+      }} outline color="primary">submit</Button>
+    </Form>
+  );
+};
+
+const Filters = () => (
+  <div>
+    <Button onClick={() => store.dispatch({
+      type: 'SET_VISIBILITY_FILTER',
+      filter: 'SHOW_ALL'
+    })}
+    color="primary">Show All</Button>{' '}
+    <Button onClick={() => store.dispatch({
+      type: 'SET_VISIBILITY_FILTER',
+      filter: 'SHOW_ACTIVE'
+    })}
+    color="success">Show Active</Button>{' '}
+    <Button onClick={() => store.dispatch({
+      type: 'SET_VISIBILITY_FILTER',
+      filter: 'SHOW_COMPLETED'
+    })}
+    color="info">Show Completed</Button>{' '}
+  </div>
+);
+
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      textInput: ''
-    };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleSubmit() {
-    store.dispatch({
-      type: 'ADD_TODO',
-      id: nextTodo++,
-      text: this.state.textInput
-    });
-    this.setState({ textInput: '' });
-  }
 
   render() {
     return (
@@ -51,32 +73,18 @@ class App extends Component {
         <Container>
           <Row>
             <Col lg="6">
-              <Form>
-                <FormGroup>
-                  <Label for="exampleEmail">Add Todo</Label>
-                  <Input onChange={(e) => this.setState({ textInput: e.target.value })} value={this.state.textInput} type="textarea" name="text" id="exampleText" />
-                </FormGroup>
-                <Button onClick={() => this.handleSubmit()} outline color="primary">submit</Button>
-              </Form>
+              <AddTodo onAddClick={text =>
+                store.dispatch({
+                  type: 'ADD_TODO',
+                  id: nextTodo++,
+                  text
+                })
+              } />
             </Col>
             <Col lg="6">
               <Row>
                 <Col lg="12">
-                  <Button onClick={() => store.dispatch({
-                    type: 'SET_VISIBILITY_FILTER',
-                    filter: 'SHOW_ALL'
-                  })}
-                  color="primary">Show All</Button>{' '}
-                  <Button onClick={() => store.dispatch({
-                    type: 'SET_VISIBILITY_FILTER',
-                    filter: 'SHOW_ACTIVE'
-                  })}
-                  color="success">Show Active</Button>{' '}
-                  <Button onClick={() => store.dispatch({
-                    type: 'SET_VISIBILITY_FILTER',
-                    filter: 'SHOW_COMPLETED'
-                  })}
-                  color="info">Show Completed</Button>{' '}
+                  <Filters />
                 </Col>
               </Row>
               <Todos {...this.props} />

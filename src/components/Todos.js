@@ -25,60 +25,55 @@ const getVisibleTodos = (
   }
 };
 
-class Todos extends Component {
-  render() {
-    const {
+const Todo = ({
+  completed,
+  id,
+  onClick,
+  text,
+  visibilityFilter
+}) => (
+  <ListGroupItem
+    style={{
+      cursor: 'pointer',
+      textAlign: 'left'
+    }}
+    color={completed ? 'success' : 'danger'}
+    onClick={onClick}
+    currentfilter={visibilityFilter}>
+    <Badge pill style={{ marginRight: '10px' }}>{id}</Badge>
+    {text}
+  </ListGroupItem>);
+
+const TodoList = ({
+  todos,
+  onTodoClick
+}) => (
+  <ListGroup style={{ marginTop: '10px' }}>
+    {todos.map(todo => (
+      <Todo key={`${todo.id}-todo`}
+        {...todo}
+        onClick={() => onTodoClick(todo.id)}
+      />
+    ))}
+  </ListGroup>
+);
+
+const Todos = ({
+  todos,
+  visibilityFilter
+}) => {
+  return (<TodoList
+    todos={getVisibleTodos(
       todos,
       visibilityFilter
-    } = this.props;
-
-    const visibleTodos = getVisibleTodos(
-      todos,
-      visibilityFilter
-    );
-
-    const Todo = ({
-      onClick,
-      completed,
-      text,
-      id
-    }) => (
-      <ListGroupItem
-        style={{
-          cursor: 'pointer',
-          textAlign: 'left'
-        }}
-        color={completed ? 'success' : 'danger'}
-        onClick={onClick}
-        currentfilter={visibilityFilter}>
-        <Badge pill style={{ marginRight: '10px' }}>{id}</Badge>
-        {text}
-      </ListGroupItem>);
-
-    const TodoList = ({
-      todos,
-      onTodoClick
-    }) => (
-      <ListGroup style={{ marginTop: '10px' }}>
-        {todos.map(todo => (
-          <Todo key={`${todo.id}-todo`}
-            {...todo}
-            onClick={() => onTodoClick(todo.id)}
-          />
-        ))}
-      </ListGroup>
-    );
-
-    return (<TodoList
-      todos={visibleTodos}
-      onTodoClick={id =>
-        store.dispatch({
-          type: 'TOGGLE_TODO',
-          id
-        })
-      } />);
-  }
-}
+    )}
+    onTodoClick={id =>
+      store.dispatch({
+        type: 'TOGGLE_TODO',
+        id
+      })
+    } />);
+};
 
 Todos.defaultProps = {
   todos: [],
