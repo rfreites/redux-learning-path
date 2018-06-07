@@ -39,23 +39,38 @@ const AddTodo = ({
   );
 };
 
+class FilterLink extends Component {
+  componentWillMount() {
+    this.unsubscribe = store.subscribe(() => {
+      this.forceUpdate();
+    });
+  }
+  componentDidMount() {
+    this.unsubscribe();
+  }
+
+  render() {
+    const props = this.props;
+    const state = store.getState();
+
+    return (
+      <Button onClick={() => store.dispatch({
+        type: 'SET_VISIBILITY_FILTER',
+        filter: props.filter
+      })}
+      disabled={props.filter === state.visibilityFilter}
+      color={props.color}>
+        { props.children }
+      </Button>
+    );
+  }
+}
+
 const Filters = () => (
   <div>
-    <Button onClick={() => store.dispatch({
-      type: 'SET_VISIBILITY_FILTER',
-      filter: 'SHOW_ALL'
-    })}
-    color="primary">Show All</Button>{' '}
-    <Button onClick={() => store.dispatch({
-      type: 'SET_VISIBILITY_FILTER',
-      filter: 'SHOW_ACTIVE'
-    })}
-    color="success">Show Active</Button>{' '}
-    <Button onClick={() => store.dispatch({
-      type: 'SET_VISIBILITY_FILTER',
-      filter: 'SHOW_COMPLETED'
-    })}
-    color="info">Show Completed</Button>{' '}
+    <FilterLink filter="SHOW_ALL" color="primary">Show All</FilterLink>{' '}
+    <FilterLink filter="SHOW_ACTIVE" color="danger">Show Active</FilterLink>{' '}
+    <FilterLink filter="SHOW_COMPLETED" colro="warning">Show Completed</FilterLink>{' '}
   </div>
 );
 
@@ -84,7 +99,7 @@ class App extends Component {
             <Col lg="6">
               <Row>
                 <Col lg="12">
-                  <Filters />
+                  <Filters {...this.props} />
                 </Col>
               </Row>
               <Todos {...this.props} />

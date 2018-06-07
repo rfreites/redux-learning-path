@@ -22,6 +22,9 @@
         "react/forbid-prop-types": 0,
         "no-plusplus": 0,
         "react/jsx-closing-bracket-location": 0,
-        "no-shadow": 0
+        "no-shadow": 0,
+        "react/jsx-indent-props": 0,
+        "prefer-destructuring": 0,
+        "react/no-multi-comp": 0
     }
 }
