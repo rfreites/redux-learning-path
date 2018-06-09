@@ -1,4 +1,5 @@
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import todos from './Todos';
 import visibilityFilter from './VisibilityFilter';
 
@@ -37,7 +38,11 @@ const todoApp = combineReducers({
   todos,
   visibilityFilter
 });
-
-const store = createStore(todoApp);
+/* eslint-disable no-underscore-dangle */
+const store = createStore(
+  todoApp,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+/* eslint-enable */
 
 export default store;

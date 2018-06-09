@@ -14,6 +14,7 @@ import {
 import './reduxers/Todos';
 import './logo.svg';
 import './App.css';
+import FilterLink from './components/FilterLink';
 import Todos from './components/Todos';
 import store from './reduxers/Store';
 
@@ -38,33 +39,6 @@ const AddTodo = ({
     </Form>
   );
 };
-
-class FilterLink extends Component {
-  componentWillMount() {
-    this.unsubscribe = store.subscribe(() => {
-      this.forceUpdate();
-    });
-  }
-  componentDidMount() {
-    this.unsubscribe();
-  }
-
-  render() {
-    const props = this.props;
-    const state = store.getState();
-
-    return (
-      <Button onClick={() => store.dispatch({
-        type: 'SET_VISIBILITY_FILTER',
-        filter: props.filter
-      })}
-      disabled={props.filter === state.visibilityFilter}
-      color={props.color}>
-        { props.children }
-      </Button>
-    );
-  }
-}
 
 const Filters = () => (
   <div>
