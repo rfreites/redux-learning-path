@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   Badge,
   ListGroup,
@@ -59,14 +60,14 @@ const TodoList = ({
 
 class VisibleTodoList extends Component {
   componentWillMount() {
-    const { store } = this.props;
+    const { store } = this.context;
     store.subscribe(() => {
       this.forceUpdate();
     });
   }
 
   render() {
-    const { store } = this.props;
+    const { store } = this.context;
     const state = store.getState();
     const todos = getVisibleTodos(
       state.todos,
@@ -87,5 +88,9 @@ class VisibleTodoList extends Component {
     );
   }
 }
+
+VisibleTodoList.contextTypes = {
+  store: PropTypes.object
+};
 
 export default VisibleTodoList;

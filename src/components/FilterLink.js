@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
+import PropTypes from 'prop-types';
 
-export default class FilterLink extends Component {
+class FilterLink extends Component {
   componentWillMount() {
-    const { store } = this.props;
+    const { store } = this.context;
     store.subscribe(() => {
       this.forceUpdate();
     });
   }
 
   render() {
-    const { store } = this.props;
+    const { store } = this.context;
     const props = this.props;
     const state = store.getState();
 
@@ -26,3 +27,9 @@ export default class FilterLink extends Component {
     );
   }
 }
+
+FilterLink.contextTypes = {
+  store: PropTypes.object
+};
+
+export default FilterLink;

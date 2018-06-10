@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   Button,
   Col,
@@ -19,7 +20,7 @@ import VisibleTodoList from './components/VisibleTodoList';
 
 let nextTodo = 0;
 
-const AddTodo = ({ store }) => {
+const AddTodo = (props, { store }) => {
   let input;
   return (
     <Form>
@@ -42,7 +43,11 @@ const AddTodo = ({ store }) => {
   );
 };
 
-const Filters = ({ store }) => (
+AddTodo.contextTypes = {
+  store: PropTypes.object
+};
+
+const Filters = (props, { store }) => (
   <div>
     <FilterLink store={store} filter="SHOW_ALL" color="primary">Show All</FilterLink>{' '}
     <FilterLink store={store} filter="SHOW_ACTIVE" color="danger">Show Active</FilterLink>{' '}
@@ -50,7 +55,11 @@ const Filters = ({ store }) => (
   </div>
 );
 
-const App = ({ store }) => (
+AddTodo.contextTypes = {
+  store: PropTypes.object
+};
+
+const App = () => (
   <div className="App">
     <Jumbotron fluid>
       <Container fluid>
@@ -61,15 +70,15 @@ const App = ({ store }) => (
     <Container>
       <Row>
         <Col lg="6">
-          <AddTodo store={store} />
+          <AddTodo />
         </Col>
         <Col lg="6">
           <Row>
             <Col lg="12">
-              <Filters store={store} />
+              <Filters />
             </Col>
           </Row>
-          <VisibleTodoList store={store} />
+          <VisibleTodoList />
         </Col>
       </Row>
     </Container>
