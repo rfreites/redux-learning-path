@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import React, { Component } from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
@@ -12,7 +12,6 @@ import {
   Label,
   Row
 } from 'reactstrap';
-// import ReactDOM from 'react-dom';
 import './reduxers/Todos';
 import './logo.svg';
 import './App.css';
@@ -45,11 +44,11 @@ let AddTodo = ({ dispatch }) => {
 };
 AddTodo = connect()(AddTodo);
 const Filters = (props, { store }) => (
-  <div>
+  <Fragment>
     <FilterLink store={store} filter="SHOW_ALL" color="primary">Show All</FilterLink>{' '}
     <FilterLink store={store} filter="SHOW_ACTIVE" color="danger">Show Active</FilterLink>{' '}
     <FilterLink store={store} filter="SHOW_COMPLETED" colro="warning">Show Completed</FilterLink>{' '}
-  </div>
+  </Fragment>
 );
 
 AddTodo.contextTypes = {
