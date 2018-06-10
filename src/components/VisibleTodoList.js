@@ -6,6 +6,13 @@ import {
   ListGroupItem
 } from 'reactstrap';
 
+const toggleTodo = (id) => {
+  return {
+    type: 'TOGGLE_TODO',
+    id
+  };
+};
+
 const getVisibleTodos = (
   todos,
   filter
@@ -68,10 +75,7 @@ const mapStateToTodoListProps = (state) => {
 const mapDispatchToTodoListProps = (dispatch) => {
   return {
     onTodoClick: (id) => {
-      dispatch({
-        type: 'TOGGLE_TODO',
-        id
-      });
+      dispatch(toggleTodo(id));
     }
   };
 };

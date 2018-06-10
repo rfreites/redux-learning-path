@@ -19,6 +19,13 @@ import FilterLink from './components/FilterLink';
 import VisibleTodoList from './components/VisibleTodoList';
 
 let nextTodo = 0;
+const addTodo = (text) => {
+  return {
+    type: 'ADD_TODO',
+    id: nextTodo++,
+    text
+  };
+};
 
 let AddTodo = ({ dispatch }) => {
   let input;
@@ -31,11 +38,7 @@ let AddTodo = ({ dispatch }) => {
         }} className="form-control" aria-label="With textarea" />
       </FormGroup>
       <Button onClick={() => {
-        dispatch({
-          type: 'ADD_TODO',
-          id: nextTodo++,
-          text: input.value
-        });
+        dispatch(addTodo(input.value));
         input.value = '';
       }}
       outline color="primary">submit</Button>

@@ -1,5 +1,11 @@
 import { connect } from 'react-redux';
 import { Button } from 'reactstrap';
+const setVisibilityFilter = (filter) => {
+  return {
+    type: 'SET_VISIBILITY_FILTER',
+    filter
+  };
+};
 
 const mapStateToFilterLinkProps = (
   state,
@@ -17,10 +23,7 @@ const mapDispatchToFilterLinkProps = (
   ownProps
 ) => {
   return {
-    onClick: () => dispatch({
-      type: 'SET_VISIBILITY_FILTER',
-      filter: ownProps.filter
-    })
+    onClick: () => dispatch(setVisibilityFilter(ownProps.filter))
   };
 };
 
