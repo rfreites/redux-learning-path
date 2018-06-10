@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
-import store from '../reduxers/Store';
 
 export default class FilterLink extends Component {
   componentWillMount() {
+    const { store } = this.props;
     store.subscribe(() => {
       this.forceUpdate();
     });
   }
 
   render() {
+    const { store } = this.props;
     const props = this.props;
     const state = store.getState();
 

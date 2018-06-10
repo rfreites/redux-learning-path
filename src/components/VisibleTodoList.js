@@ -4,7 +4,6 @@ import {
   ListGroup,
   ListGroupItem
 } from 'reactstrap';
-import store from '../reduxers/Store';
 
 const getVisibleTodos = (
   todos,
@@ -60,12 +59,14 @@ const TodoList = ({
 
 class VisibleTodoList extends Component {
   componentWillMount() {
+    const { store } = this.props;
     store.subscribe(() => {
       this.forceUpdate();
     });
   }
 
   render() {
+    const { store } = this.props;
     const state = store.getState();
     const todos = getVisibleTodos(
       state.todos,

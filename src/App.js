@@ -16,11 +16,10 @@ import './logo.svg';
 import './App.css';
 import FilterLink from './components/FilterLink';
 import VisibleTodoList from './components/VisibleTodoList';
-import store from './reduxers/Store';
 
 let nextTodo = 0;
 
-const AddTodo = () => {
+const AddTodo = ({ store }) => {
   let input;
   return (
     <Form>
@@ -43,42 +42,38 @@ const AddTodo = () => {
   );
 };
 
-const Filters = () => (
+const Filters = ({ store }) => (
   <div>
-    <FilterLink filter="SHOW_ALL" color="primary">Show All</FilterLink>{' '}
-    <FilterLink filter="SHOW_ACTIVE" color="danger">Show Active</FilterLink>{' '}
-    <FilterLink filter="SHOW_COMPLETED" colro="warning">Show Completed</FilterLink>{' '}
+    <FilterLink store={store} filter="SHOW_ALL" color="primary">Show All</FilterLink>{' '}
+    <FilterLink store={store} filter="SHOW_ACTIVE" color="danger">Show Active</FilterLink>{' '}
+    <FilterLink store={store} filter="SHOW_COMPLETED" colro="warning">Show Completed</FilterLink>{' '}
   </div>
 );
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <Jumbotron fluid>
-          <Container fluid>
-            <h1 className="display-3">Todos app</h1>
-            <p className="lead">This is a todo app.</p>
-          </Container>
-        </Jumbotron>
-        <Container>
+const App = ({ store }) => (
+  <div className="App">
+    <Jumbotron fluid>
+      <Container fluid>
+        <h1 className="display-3">Todos app</h1>
+        <p className="lead">This is a todo app.</p>
+      </Container>
+    </Jumbotron>
+    <Container>
+      <Row>
+        <Col lg="6">
+          <AddTodo store={store} />
+        </Col>
+        <Col lg="6">
           <Row>
-            <Col lg="6">
-              <AddTodo />
-            </Col>
-            <Col lg="6">
-              <Row>
-                <Col lg="12">
-                  <Filters />
-                </Col>
-              </Row>
-              <VisibleTodoList />
+            <Col lg="12">
+              <Filters store={store} />
             </Col>
           </Row>
-        </Container>
-      </div>
-    );
-  }
-}
+          <VisibleTodoList store={store} />
+        </Col>
+      </Row>
+    </Container>
+  </div>
+);
 
 export default App;
