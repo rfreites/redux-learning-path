@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   Badge,
@@ -58,39 +59,29 @@ const TodoList = ({
   </ListGroup>
 );
 
-class VisibleTodoList extends Component {
-  componentWillMount() {
-    const { store } = this.context;
-    store.subscribe(() => {
-      this.forceUpdate();
-    });
-  }
-
-  render() {
-    const { store } = this.context;
-    const state = store.getState();
-    const todos = getVisibleTodos(
+const mapStateToProps = (state) => {
+  return {
+    todos: getVisibleTodos(
       state.todos,
       state.visibilityFilter
-    );
-
-    console.log(todos);
-    return (
-      <TodoList
-        todos={todos}
-        onTodoClick={id =>
-          store.dispatch({
-            type: 'TOGGLE_TODO',
-            id
-          })
-        }
-      />
-    );
-  }
-}
-
-VisibleTodoList.contextTypes = {
-  store: PropTypes.object
+    )
+  };
 };
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onTodoClick: (id) => {
+      dispatch({
+        type: 'TOGGLE_TODO',
+        id
+      });
+    }
+  };
+};
+
+const VisibleTodoList = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TodoList);
 
 export default VisibleTodoList;
