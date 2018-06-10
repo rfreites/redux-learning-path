@@ -4,12 +4,9 @@ import store from '../reduxers/Store';
 
 export default class FilterLink extends Component {
   componentWillMount() {
-    this.unsubscribe = store.subscribe(() => {
+    store.subscribe(() => {
       this.forceUpdate();
     });
-  }
-  componentDidMount() {
-    this.unsubscribe();
   }
 
   render() {

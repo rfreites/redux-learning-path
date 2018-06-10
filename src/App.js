@@ -15,14 +15,12 @@ import './reduxers/Todos';
 import './logo.svg';
 import './App.css';
 import FilterLink from './components/FilterLink';
-import Todos from './components/Todos';
+import VisibleTodoList from './components/VisibleTodoList';
 import store from './reduxers/Store';
 
 let nextTodo = 0;
 
-const AddTodo = ({
-  onAddClick
-}) => {
+const AddTodo = () => {
   let input;
   return (
     <Form>
@@ -33,9 +31,14 @@ const AddTodo = ({
         }} className="form-control" aria-label="With textarea" />
       </FormGroup>
       <Button onClick={() => {
-        onAddClick(input.value);
+        store.dispatch({
+          type: 'ADD_TODO',
+          id: nextTodo++,
+          text: input.value
+        });
         input.value = '';
-      }} outline color="primary">submit</Button>
+      }}
+      outline color="primary">submit</Button>
     </Form>
   );
 };
@@ -49,7 +52,6 @@ const Filters = () => (
 );
 
 class App extends Component {
-
   render() {
     return (
       <div className="App">
@@ -62,21 +64,15 @@ class App extends Component {
         <Container>
           <Row>
             <Col lg="6">
-              <AddTodo onAddClick={text =>
-                store.dispatch({
-                  type: 'ADD_TODO',
-                  id: nextTodo++,
-                  text
-                })
-              } />
+              <AddTodo />
             </Col>
             <Col lg="6">
               <Row>
                 <Col lg="12">
-                  <Filters {...this.props} />
+                  <Filters />
                 </Col>
               </Row>
-              <Todos {...this.props} />
+              <VisibleTodoList />
             </Col>
           </Row>
         </Container>

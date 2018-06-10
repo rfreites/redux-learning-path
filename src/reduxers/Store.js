@@ -1,5 +1,4 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { createStore, combineReducers } from 'redux';
 import todos from './Todos';
 import visibilityFilter from './VisibilityFilter';
 

@@ -25,7 +25,9 @@
 		"no-shadow": 0,
 		"react/jsx-indent-props": 0,
 		"prefer-destructuring": 0,
-		"react/no-multi-comp": 0
+		"react/no-multi-comp": 0,
+		"react/prop-types": 0,
+		"react/jsx-max-props-per-line": 0
 	},
 	"globals": {
 		"window": true,

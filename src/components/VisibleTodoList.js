@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import {
   Badge,
   ListGroup,
@@ -42,7 +41,8 @@ const Todo = ({
     currentfilter={visibilityFilter}>
     <Badge pill style={{ marginRight: '10px' }}>{id}</Badge>
     {text}
-  </ListGroupItem>);
+  </ListGroupItem>
+);
 
 const TodoList = ({
   todos,
@@ -58,31 +58,33 @@ const TodoList = ({
   </ListGroup>
 );
 
-const Todos = ({
-  todos,
-  visibilityFilter
-}) => {
-  return (<TodoList
-    todos={getVisibleTodos(
-      todos,
-      visibilityFilter
-    )}
-    onTodoClick={id =>
-      store.dispatch({
-        type: 'TOGGLE_TODO',
-        id
-      })
-    } />);
-};
+class VisibleTodoList extends Component {
+  componentWillMount() {
+    store.subscribe(() => {
+      this.forceUpdate();
+    });
+  }
 
-Todos.defaultProps = {
-  todos: [],
-  visibilityFilter: 'SHOW_ALL'
-};
+  render() {
+    const state = store.getState();
+    const todos = getVisibleTodos(
+      state.todos,
+      state.visibilityFilter
+    );
 
-Todos.propTypes = {
-  todos: PropTypes.array,
-  visibilityFilter: PropTypes.string
-};
+    console.log(todos);
+    return (
+      <TodoList
+        todos={todos}
+        onTodoClick={id =>
+          store.dispatch({
+            type: 'TOGGLE_TODO',
+            id
+          })
+        }
+      />
+    );
+  }
+}
 
-export default Todos;
+export default VisibleTodoList;
