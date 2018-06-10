@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -20,7 +21,7 @@ import VisibleTodoList from './components/VisibleTodoList';
 
 let nextTodo = 0;
 
-const AddTodo = (props, { store }) => {
+let AddTodo = ({ dispatch }) => {
   let input;
   return (
     <Form>
@@ -31,7 +32,7 @@ const AddTodo = (props, { store }) => {
         }} className="form-control" aria-label="With textarea" />
       </FormGroup>
       <Button onClick={() => {
-        store.dispatch({
+        dispatch({
           type: 'ADD_TODO',
           id: nextTodo++,
           text: input.value
@@ -42,11 +43,7 @@ const AddTodo = (props, { store }) => {
     </Form>
   );
 };
-
-AddTodo.contextTypes = {
-  store: PropTypes.object
-};
-
+AddTodo = connect()(AddTodo);
 const Filters = (props, { store }) => (
   <div>
     <FilterLink store={store} filter="SHOW_ALL" color="primary">Show All</FilterLink>{' '}
